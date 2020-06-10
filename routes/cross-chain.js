@@ -25,7 +25,7 @@ router.get('/:hash', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
     let txData = req.body;
 
-    if (!txData.from || !txData.to || !txData.data ) res.status(400).json({ error: "缺少資料欄位" });
+    if (!txData.from || !txData.to || !txData.data ) return res.status(400).json({ error: "缺少資料欄位" });
 
     try {
         console.log("[INFO] Creating cross chain transaction from " + txData.from + " to " + txData.to);
@@ -33,10 +33,10 @@ router.post('/', async (req, res, next) => {
         let txRes = await manager.sendTransaction(txData.from, txData.to, "REQUEST", txData.data);
         let dataHash = await manager.calcHash(txData.from, txData.to, "REQUEST", txData.data);
 
-        res.status(200).json({ info: "跨鏈交易請求已提交", dataHash: dataHash, rawResponse: txRes });
+        return res.status(200).json({ info: "跨鏈交易請求已提交", dataHash: dataHash, rawResponse: txRes });
     } catch (err) {
         console.log("[ERROR] Create cross chain transaction error. Error: " + err);
-        res.status(500).json({ error: "伺服器發生錯誤" });
+        return res.status(500).json({ error: "伺服器發生錯誤" });
     }
 });
 

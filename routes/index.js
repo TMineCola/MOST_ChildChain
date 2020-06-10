@@ -3,7 +3,7 @@ var router = express.Router();
 
 // Response node information
 router.get('/', (req, res, next) => {
-    res.status(200).json({
+    return res.status(200).json({
         mode: process.env.MODE || undefined,
         account: process.env.PUBLIC_KEY || undefined,
         role: process.env.ROLE || undefined,
