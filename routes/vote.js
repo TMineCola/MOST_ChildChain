@@ -18,7 +18,7 @@ router.post('/', PassingQueue, (req, res, next) => {
         res.status(200).json({ info: "投票成功" }) :
         res.status(400).json({ error: "重複投票" }) ;
     } catch (error) {
-        console.log("[ERROR] Voting for " + voteInfo.hash + " error. Error: " + error);
+        console.log("[ERROR] Voting for " + voteInfo.hash + " error. Error: " + error.message);
         return res.status(500).json({ error: "伺服器異常" });
     }
 });
