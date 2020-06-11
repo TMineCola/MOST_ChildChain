@@ -46,7 +46,7 @@ router.post('/', async (req, res, next) => {
         // Calculate data hash for search
         let dataHash = await manager.calcHash(txData.from, txData.to, "REQUEST", txData.data);
         // If cross chain is from relay chain send to us, It's Prepare state
-        if (txData.to === parseInt(process.env.CHAIN_ID)) await manager.changeState(dataHash, TX_STATE.PREPARE);
+        if (parseInt(txData.to) === parseInt(process.env.CHAIN_ID)) await manager.changeState(dataHash, TX_STATE.PREPARE);
 
         // Log transaction to contract
         await manager.setInitTx(dataHash, txRes.receipt.transactionHash);
