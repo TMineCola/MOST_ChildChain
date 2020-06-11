@@ -13,10 +13,13 @@ contract CrossChainTransaction {
     bytes constant prefix = "\x19Ethereum Signed Message:\n";
     address private deployer;
 
-    mapping( bytes32 => uint8 ) txStates;
-    mapping( bytes32 => uint256 ) txTimestamp;
+    mapping( bytes32 => uint8 ) txStates; // Use to save tx state
+    mapping( bytes32 => uint256 ) txTimestamp; // Use to save tx active time
+    mapping( bytes32 => bytes32 ) initTxInfo; // Use to save tx init tx for getting init data
+
     event sendCrossTransaction(uint256 fromChainID, uint256 toChainID, string methods, uint256 timestamp, string data);
-    event onChangeTxState(bytes32 txHash, uint8 state);
+    event onChangeTxState(bytes32 dataHash, uint8 state);
+    event onSetTxInfo(bytes32 dataHash, bytes32 txHash);
 
     constructor() public{
         deployer = msg.sender;
@@ -34,25 +37,35 @@ contract CrossChainTransaction {
     function sendCrossChainTransaction(uint256 fromChainID, uint256 toChainID, string memory methods,
                                                         string memory data, uint256 timestamp) public {
         require(msg.sender == deployer, "The account is not approved to invoke this function");
-        bytes32 txHash = keccak256(abi.encodePacked(fromChainID, toChainID, methods, data));
-        txStates[txHash] = uint8(State.PRE_PREPARE);
-        txTimestamp[txHash] = timestamp;
+        bytes32 dataHash = keccak256(abi.encodePacked(fromChainID, toChainID, methods, data));
+        txStates[dataHash] = uint8(State.PRE_PREPARE);
+        txTimestamp[dataHash] = timestamp;
         emit sendCrossTransaction(fromChainID, toChainID, methods, timestamp, data);
     }
 
-    function changeTxState(bytes32 txHash, uint8 state, uint256 timestamp) public {
+    function setTxInfo(bytes32 dataHash, bytes32 txHash) public {
         require(msg.sender == deployer, "The account is not approved to invoke this function");
-        txStates[txHash] = state;
-        txTimestamp[txHash] = timestamp;
-        emit onChangeTxState(txHash, state);
+        initTxInfo[dataHash] = txHash;
+        emit onSetTxInfo(dataHash, txHash);
     }
 
-    function getTxInsertTime(bytes32 txHash) public view returns ( uint256 time ) {
-        return txTimestamp[txHash];
+    function changeTxState(bytes32 dataHash, uint8 state, uint256 timestamp) public {
+        require(msg.sender == deployer, "The account is not approved to invoke this function");
+        txStates[dataHash] = state;
+        txTimestamp[dataHash] = timestamp;
+        emit onChangeTxState(dataHash, state);
     }
 
-    function getTxRecentState(bytes32 txHash) public view returns (uint8 state) {
-        return txStates[txHash];
+    function getTxInitInfo(bytes32 dataHash) public view returns ( bytes32 txHash ) {
+        return initTxInfo[dataHash];
+    }
+
+    function getTxInsertTime(bytes32 dataHash) public view returns ( uint256 time ) {
+        return txTimestamp[dataHash];
+    }
+
+    function getTxRecentState(bytes32 dataHash) public view returns (uint8 state) {
+        return txStates[dataHash];
     }
 
 }
