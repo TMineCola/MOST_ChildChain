@@ -16,7 +16,7 @@ router.get('/:hash', async (req, res, next) => {
                 res.status(200).json({ info: "查詢成功", status: txRes.words[0], rawResponse: txRes }) :
                 res.status(404).json({ error: "查詢不到該筆狀態" });
     } catch (err) {
-        console.log("[ERROR] Search state error. Error: " + err);
+        console.log("[ERROR] Search state error. Error: " + err.message);
         return res.status(500).json({ error: "伺服器發生錯誤" });
     }
 
@@ -35,7 +35,7 @@ router.post('/', async (req, res, next) => {
 
         return res.status(200).json({ info: "跨鏈交易請求已提交", dataHash: dataHash, rawResponse: txRes });
     } catch (err) {
-        console.log("[ERROR] Create cross chain transaction error. Error: " + err);
+        console.log("[ERROR] Create cross chain transaction error. Error: " + err.message);
         return res.status(500).json({ error: "伺服器發生錯誤" });
     }
 });
@@ -63,7 +63,7 @@ router.patch('/', async (req, res, next) => {
         }
 
     } catch (err) {
-        console.log("[ERROR] Change cross chain transaction " + txData.hash + " state to " + state + "fail. Error: " + err);
+        console.log("[ERROR] Change cross chain transaction " + txData.hash + " state to " + state + "fail. Error: " + err.message);
         return res.status(500).json({ error: "伺服器發生錯誤" });
     }
 });
