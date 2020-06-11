@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "build": "truffle build",
+    "deploy": "truffle migrate",
+    "start": "node ./bin/www",
+    "reset": "truffle migrate --reset"
   },
   "dependencies": {
     "abi-decoder": "^2.3.0",
@@ -16,6 +19,7 @@
     "morgan": "~1.9.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
+    "truffle": "^5.1.29",
     "truffle-contract": "^4.0.31",
     "web3": "^1.2.8"
   }
