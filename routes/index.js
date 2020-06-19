@@ -7,7 +7,7 @@ router.get('/', (req, res, next) => {
         mode: process.env.MODE || undefined,
         account: process.env.PUBLIC_KEY || undefined,
         role: process.env.ROLE || undefined,
-        provider: process.env.QUORUM_PROVIDER || undefined,
+        provider: process.env.QUORUM_IPC_PROVIDER || undefined,
         chain: {
             id: process.env.CHAIN_ID || undefined,
             member_amount: process.env.CHAIN_COUNT || undefined,
