@@ -20,7 +20,7 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "truffle": "^5.1.29",
-    "truffle-contract": "^4.0.31",
+    "@truffle/contract": "^4.2.9",
     "web3": "^1.2.8"
   }
 }
