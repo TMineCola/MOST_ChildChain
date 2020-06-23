@@ -136,3 +136,7 @@ pm2 delete ${Index or Name}
 # 啟動服務監控畫面 (可查看各個服務的狀態及即時 Log)
 pm2 monit
 ```
+
+## Reference
+
+1. 節點流程 HackMD [連結](https://hackmd.io/@minecola/HyntsjEp8)
