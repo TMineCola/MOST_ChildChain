@@ -89,37 +89,50 @@
 
 ## Project Architecture
 
-    ```
-    .
-    ├── app.js - 服務進入點
-    ├── bin
-    │   └── www
-    ├── build
-    ├── contracts - 合約原始 Solidty 檔
-    │   ├── CrossChainTransaction.sol - 跨鏈合約
-    │   ├── Migrations.sol
-    │   └── NamingService.sol - 命名服務合約
-    ├── lib
-    │   ├── consensis-vote.js - 投票機制
-    │   ├── contract-listener.js - 合約監聽
-    │   ├── contract-manager.js - 合約功能調用
-    │   ├── quorum-connector.js - 建立 Quorum 連線、 ABI 載入並建立合約映射
-    │   └── transaction-searcher.js - 查詢鏈上交易紀錄
-    ├── migrations
-    │   ├── 1_initial_migration.js
-    │   └── 2_deploy_contracts.js - Truffle 部署合約
-    ├── model
-    │   ├── enum - 跨鏈交易狀態 enum
-    │   └── vote.js - 投票物件
-    ├── node_modules - 依賴套件
-    ├── package-lock.json
-    ├── package.json - 依賴套件描述檔
-    ├── public - 開放檔案存取的資料夾
-    ├── routes - HTTP 路由
-    │   ├── cross-chain.js - 跨鏈交易相關
-    │   ├── index.js - 查詢節點狀態
-    │   ├── middleware - 中介層 (內負責掛入投票 Queue)
-    │   └── vote.js - 投票
-    ├── truffle-config.js - truffle 連線及合約部署相關設定
-    └── views - 網頁 ejs 樣板
-    ```
+```
+.
+├── app.js - 服務進入點
+├── bin
+│   └── www
+├── build
+├── contracts - 合約原始 Solidty 檔
+│   ├── CrossChainTransaction.sol - 跨鏈合約
+│   ├── Migrations.sol
+│   └── NamingService.sol - 命名服務合約
+├── lib
+│   ├── consensis-vote.js - 投票機制
+│   ├── contract-listener.js - 合約監聽
+│   ├── contract-manager.js - 合約功能調用
+│   ├── quorum-connector.js - 建立 Quorum 連線、 ABI 載入並建立合約映射
+│   └── transaction-searcher.js - 查詢鏈上交易紀錄
+├── migrations
+│   ├── 1_initial_migration.js
+│   └── 2_deploy_contracts.js - Truffle 部署合約
+├── model
+│   ├── enum - 跨鏈交易狀態 enum
+│   └── vote.js - 投票物件
+├── node_modules - 依賴套件
+├── package-lock.json
+├── package.json - 依賴套件描述檔
+├── public - 開放檔案存取的資料夾
+├── routes - HTTP 路由
+│   ├── cross-chain.js - 跨鏈交易相關
+│   ├── index.js - 查詢節點狀態
+│   ├── middleware - 中介層 (內負責掛入投票 Queue)
+│   └── vote.js - 投票
+├── truffle-config.js - truffle 連線及合約部署相關設定
+└── views - 網頁 ejs 樣板
+```
+
+## Monitor
+
+```
+# 查看目前服務執行狀態
+pm2 ls
+# 停止指定服務
+pm2 stop ${Index or Name}
+# 從 pm2 移除服務
+pm2 delete ${Index or Name}
+# 啟動服務監控畫面 (可查看各個服務的狀態及即時 Log)
+pm2 monit
+```
